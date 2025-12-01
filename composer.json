@@ -1,0 +1,56 @@
+{
+    "name": "nocego/yii2-wallet",
+    "type": "yii2-extension",
+    "description": "Wallet functionality for Yii2 applications.",
+    "keywords": [
+        "yii2",
+        "google wallet",
+        "apple wallet"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "nocego",
+            "email": "gerold_abg@hotmail.com"
+        }
+    ],
+    "support": {
+        "source": "https://github.com/nocego/yii2-wallet",
+        "issues": "https://github.com/nocego/yii2-wallet/issues"
+    },
+    "minimum-stability": "beta",
+    "require": {
+        "php": ">=8.2",
+        "kreait/firebase-php": "^7.16.1",
+        "yiisoft/yii2": "^2.0.20"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "nocego\\yii2\\wallet\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "yiiunit\\extensions\\wallet\\": "tests"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
+        }
+    }
+}

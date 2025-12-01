@@ -1,1 +1,1 @@
-# yii2-hq-wallet
+# yii2-wallet
