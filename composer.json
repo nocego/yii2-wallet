@@ -21,8 +21,11 @@
     "minimum-stability": "beta",
     "require": {
         "php": ">=8.2",
-        "kreait/firebase-php": "^7.16.1",
-        "yiisoft/yii2": "^2.0.20"
+        "yiisoft/yii2": "^2.0.20",
+        "google/auth": "^1.18",
+        "guzzlehttp/guzzle": "*",
+        "google/apiclient": "^2.15",
+        "google/apiclient-services": "~0.300"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
