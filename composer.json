@@ -20,12 +20,13 @@
     },
     "minimum-stability": "beta",
     "require": {
-        "php": ">=8.2",
+        "php": ">=8.3",
         "yiisoft/yii2": "^2.0.20",
         "google/auth": "^1.18",
         "guzzlehttp/guzzle": "*",
         "google/apiclient": "^2.15",
-        "google/apiclient-services": "~0.300"
+        "google/apiclient-services": "~0.300",
+        "pkpass/pkpass": "^2.5.0"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
