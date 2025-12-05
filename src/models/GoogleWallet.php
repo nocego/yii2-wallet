@@ -24,21 +24,22 @@ use Google\Service\Walletobjects\TranslatedString;
 use Google\Service\Walletobjects\Uri;
 use InvalidArgumentException;
 use nocego\yii2\wallet\Module;
+use Yii;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
+use yii\helpers\Json;
 
 class GoogleWallet extends Model
 {
     /**
      * The Google API Client
-     * https://github.com/google/google-api-php-client
+     * @see https://github.com/google/google-api-php-client
      */
     public GoogleClient $client;
 
     /**
-     * Path to service account key file from Google Cloud Console. Environment
-     * variable: GOOGLE_APPLICATION_CREDENTIALS.
+     * Path to service account key file from Google Cloud Console.
      */
     public string|array $keyFilePath;
 
@@ -57,11 +58,17 @@ class GoogleWallet extends Model
      */
     public Walletobjects $service;
 
+    /**
+     * Required configuration keys
+     */
     private const array REQUIRED_CONFIG_KEYS = [
         'issuerId',
         'googleServiceAccountCredentials',
     ];
 
+    /**
+     * Supported ticket types mapping
+     */
     private const array SUPPORTED_TICKET_TYPES = [
         Walletobjects\EventTicketClass::class => [EventTicketObject::class, 'eventticketobject'],
         Walletobjects\FlightClass::class => [Walletobjects\FlightObject::class, 'flightobject'],
@@ -122,7 +129,8 @@ class GoogleWallet extends Model
      *
      * @param string $classSuffix Developer-defined unique ID for this pass class.
      * @param array $specifiedClassFields The fields to set for the class.
-     *  e.q.:
+     *  e.g.:
+     * ```
      *      [
      *          'eventName' => [
      *              'defaultValue' => [
@@ -132,6 +140,7 @@ class GoogleWallet extends Model
      *          ],
      *          'issuerName' => 'My Issuer Name',
      *      ]
+     * ```
      * @param string $classType The type of class to create. Default is 'eventticket'.
      *
      * @return bool whether the class was created successfully
@@ -272,7 +281,7 @@ class GoogleWallet extends Model
         }
 
         // return $object as array
-        return json_decode(json_encode($object), true);
+        return Json::decode(json_encode($object));
     }
 
     /**
@@ -517,6 +526,7 @@ class GoogleWallet extends Model
     /**
      * @throws DateInvalidTimeZoneException
      * @throws DateMalformedIntervalStringException
+     * @throws InvalidConfigException
      */
     private function transformTicketFields(array $specifiedTicketFields): array
     {
@@ -534,20 +544,22 @@ class GoogleWallet extends Model
     /**
      * @throws DateInvalidTimeZoneException
      * @throws DateMalformedIntervalStringException
+     * @throws InvalidConfigException
      */
     private function transformValidTimeInterval(array &$specifiedTicketFields): void
     {
-        if (!isset($specifiedTicketFields['validTimeInterval']['end'])) {
-            return;
-        }
-
         $intervalDuration = Module::getInstance()->googleWalletConfig['timeToAddToValidTimeIntervalEnd'] ?? 'P0D';
-        $specifiedTicketFields['validTimeInterval']['end'] = new Walletobjects\DateTime(['date' => $this->formatEndDate(
-            $specifiedTicketFields['validTimeInterval']['end'],
-            'd.m.Y',
-            'UTC',
-            $intervalDuration
-        )]);
+        if (isset($specifiedTicketFields['validTimeInterval']['end'])) {
+            $specifiedTicketFields['validTimeInterval']['end'] = Yii::createObject([
+                'class' => Walletobjects\DateTime::class,
+                'date' => $this->formatEndDate(
+                    $specifiedTicketFields['validTimeInterval']['end'],
+                    'd.m.Y',
+                    'UTC',
+                    $intervalDuration
+                )
+            ]);
+        }
 
         $this->replaceDatetimeStringsRecursive(
             $specifiedTicketFields,

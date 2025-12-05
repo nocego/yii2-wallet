@@ -19,6 +19,9 @@ use yii\web\BadRequestHttpException;
 
 class GoogleWalletController extends Controller
 {
+    /**
+     * {@inheritdoc}
+     */
     public function behaviors(): array
     {
         return ArrayHelper::merge(parent::behaviors(), [

@@ -20,6 +20,9 @@ class PKPassModel extends Model
     private const string IMAGE_ICON = 'icon.png';
     private const string IMAGE_LOGO = 'logo.png';
 
+    /**
+     * Required configuration keys
+     */
     private const array REQUIRED_CONFIG_KEYS = [
         'certificatePath',
         'certificatePassword',
@@ -29,6 +32,9 @@ class PKPassModel extends Model
         'iconUrl'
     ];
 
+    /**
+     * Required POST parameters
+     */
     private const array REQUIRED_POST_PARAMS = [
         'description',
         'serialNumber',
@@ -36,6 +42,9 @@ class PKPassModel extends Model
         'passValue'
     ];
 
+    /**
+     * Optional fields for the pass
+     */
     private const array OPTIONAL_FIELDS = [
         'relevantDate',
         'barcodes',
@@ -50,13 +59,15 @@ class PKPassModel extends Model
      * @param array $fields field parameters for the pass
      * Expected fields parameters:
      * - description: Pass description (required)
-     *      e.g., 'Flight Express Event Ticket'
+     *      e.g., ```'Flight Express Event Ticket'```
      * - serialNumber: Unique serial number for the pass (required)
-     *      e.g., '1234567890'
+     *      e.g., ```'1234567890'```
      * - passType: Pass type (required)
-     *      e.g., 'eventTicket', 'boardingPass'
+     *      e.g., ```'eventTicket', 'boardingPass'```
      * - passValue: Pass type specific data structure with headerFields, etc. (required)
      *      e.g.:
+     * ```
+     *
      *          [
      *              'headerFields' => [
      *                  [
@@ -68,22 +79,26 @@ class PKPassModel extends Model
      *              ],
      *              ...
      *          ]
+     * ```
      * - relevantDate: Optional relevant date for the pass
-     *      e.g., '2024-12-31T23:59:59Z'
+     *      e.g., ```'2024-12-31T23:59:59Z'```
      * - barcodes: Optional barcode data
      *      e.g.:
+     * ```
+     *
      *         [
-     *            'format' => 'PKBarcodeFormatQR',
+     *           'format' => 'PKBarcodeFormatQR',
      *           'message' => '1234567890',
      *           'messageEncoding' => 'iso-8859-1',
      *           'altText' => '1234567890'
-     *       ]
+     *         ]
+     * ```
      * - backgroundColor: Optional background color
-     *      e.g., 'rgb(32,110,247)'
+     *      e.g., ```'rgb(32,110,247)'```
      * - foregroundColor: Optional foreground color
-     *      e.g., 'rgb(255,255,255)'
+     *      e.g., ```'rgb(255,255,255)'```
      * - labelColor: Optional label color
-     *      e.g., 'rgb(255,255,255)'
+     *      e.g., ```'rgb(255,255,255)'```
      *
      * @return void (outputs the pkpass file directly as response)
      *

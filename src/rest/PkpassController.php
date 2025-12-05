@@ -18,6 +18,9 @@ use yii\web\BadRequestHttpException;
 
 class PkpassController extends Controller
 {
+    /**
+     * {@inheritDoc}
+     */
     public function behaviors(): array
     {
         return ArrayHelper::merge(parent::behaviors(), [

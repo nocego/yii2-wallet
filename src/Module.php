@@ -28,7 +28,10 @@ class Module extends \yii\base\Module implements BootstrapInterface
     /**
      * Google Wallet configuration array
      *
-     * @example:
+     * e.g.:
+     *
+     * ```
+     *
      *      [
      *          'issuerId' => '1234567891011121314',
      *          'googleServiceAccountCredentials' => [
@@ -46,13 +49,16 @@ class Module extends \yii\base\Module implements BootstrapInterface
      *          ],
      *          'timeToAddToValidTimeIntervalEnd' => 'P7D',
      *      ]
+     *
+     * ```
      */
     public array $googleWalletConfig = [];
 
     /**
      * pkPass configuration array
      *
-     * @example:
+     * e.g.:
+     * ```
      *      [
      *          'certificatePath' => /srv/www/www.test.org/certificates/pkpass/certificates.p12,
      *          'certificatePassword' => '12.34#56',
@@ -62,6 +68,7 @@ class Module extends \yii\base\Module implements BootstrapInterface
      *          'iconUrl' => 'https://test.org/files/Wallet/icon.png',
      *          'logoUrl' => 'https://test.org/files/Wallet/icon.png',
      *      ]
+     * ```
      */
     public array $pkPassConfig = [];
 
