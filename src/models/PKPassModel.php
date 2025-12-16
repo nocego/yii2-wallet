@@ -195,8 +195,10 @@ class PKPassModel extends Model
         $pass->setData($data);
 
         // Add images
-        $pass->addRemoteFile("https://erlebnisbank.dev.tonic.ag/files/Wallet/wallet_e_weiss.png", self::IMAGE_ICON);
-        $pass->addRemoteFile("https://erlebnisbank.dev.tonic.ag/files/Wallet/wallet_e_weiss.png", self::IMAGE_LOGO);
+        $pass->addRemoteFile($module->pkPassConfig['iconUrl'], self::IMAGE_ICON);
+        if (isset($module->pkPassConfig['logoUrl'])) {
+            $pass->addRemoteFile($module->pkPassConfig['logoUrl'], self::IMAGE_LOGO);
+        }
 
         return $pass;
     }
