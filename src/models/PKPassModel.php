@@ -186,6 +186,7 @@ class PKPassModel extends Model
                 'passTypeIdentifier' => $module->pkPassConfig['passTypeIdentifier'],
                 'serialNumber' => $fields['serialNumber'],
                 'teamIdentifier' => $module->pkPassConfig['teamIdentifier'],
+                'logoText' => "Erlebnisbank",
                 $fields['passType'] => $fields['passValue'],
             ],
             array_intersect_key($fields, array_flip(self::OPTIONAL_FIELDS))
@@ -194,10 +195,8 @@ class PKPassModel extends Model
         $pass->setData($data);
 
         // Add images
-        $pass->addRemoteFile($module->pkPassConfig['iconUrl'], self::IMAGE_ICON);
-        if (isset($module->pkPassConfig['logoUrl'])) {
-            $pass->addRemoteFile($module->pkPassConfig['logoUrl'], self::IMAGE_LOGO);
-        }
+        $pass->addRemoteFile("https://erlebnisbank.dev.tonic.ag/files/Wallet/wallet_e_weiss.png", self::IMAGE_ICON);
+        $pass->addRemoteFile("https://erlebnisbank.dev.tonic.ag/files/Wallet/wallet_e_weiss.png", self::IMAGE_LOGO);
 
         return $pass;
     }
