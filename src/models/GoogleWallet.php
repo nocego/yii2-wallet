@@ -22,12 +22,14 @@ use Google\Service\Walletobjects\LocalizedString;
 use Google\Service\Walletobjects\TextModuleData;
 use Google\Service\Walletobjects\TranslatedString;
 use Google\Service\Walletobjects\Uri;
+use GuzzleHttp\Client;
 use InvalidArgumentException;
 use nocego\yii2\wallet\Module;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 
 class GoogleWallet extends Model
@@ -117,7 +119,14 @@ class GoogleWallet extends Model
 
         // Initialize Google Wallet API service
         $this->client = new GoogleClient();
-        $this->client->setApplicationName('APPLICATION_NAME');
+
+        $requestOptions = ArrayHelper::filter(Module::getInstance()->googleWalletConfig['requestOptions'] ?? [], ['timeout', 'proxy']);
+        if (!empty($requestOptions)) {
+            $options = ArrayHelper::merge(['verify' => false], $requestOptions);
+            $this->client->setHttpClient(new Client($options));
+        }
+
+        $this->client->setApplicationName(Module::getInstance()->id);
         $this->client->setScopes(Walletobjects::WALLET_OBJECT_ISSUER);
         $this->client->setAuthConfig($this->keyFilePath);
 
