@@ -15,15 +15,15 @@ class PKPassModel extends Model
      * PKPass format version
      * Should be 1 according to Apple documentation
      */
-    private const int FORMAT_VERSION = 1;
+    private const FORMAT_VERSION = 1;
 
-    private const string IMAGE_ICON = 'icon.png';
-    private const string IMAGE_LOGO = 'logo.png';
+    private const IMAGE_ICON = 'icon.png';
+    private const IMAGE_LOGO = 'logo.png';
 
     /**
      * Required configuration keys
      */
-    private const array REQUIRED_CONFIG_KEYS = [
+    private const REQUIRED_CONFIG_KEYS = [
         'certificatePath',
         'certificatePassword',
         'organizationName',
@@ -35,7 +35,7 @@ class PKPassModel extends Model
     /**
      * Required POST parameters
      */
-    private const array REQUIRED_POST_PARAMS = [
+    private const REQUIRED_POST_PARAMS = [
         'description',
         'serialNumber',
         'passType',
@@ -45,7 +45,7 @@ class PKPassModel extends Model
     /**
      * Optional fields for the pass
      */
-    private const array OPTIONAL_FIELDS = [
+    private const OPTIONAL_FIELDS = [
         'relevantDate',
         'barcodes',
         'backgroundColor',

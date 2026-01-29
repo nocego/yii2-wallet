@@ -3,8 +3,6 @@
 namespace nocego\yii2\wallet\models;
 
 use DateInterval;
-use DateInvalidTimeZoneException;
-use DateMalformedIntervalStringException;
 use DateTimeImmutable;
 use DateTimeZone;
 use Google\Auth\Credentials\ServiceAccountCredentials;
@@ -63,7 +61,7 @@ class GoogleWallet extends Model
     /**
      * Required configuration keys
      */
-    private const array REQUIRED_CONFIG_KEYS = [
+    private const REQUIRED_CONFIG_KEYS = [
         'issuerId',
         'googleServiceAccountCredentials',
     ];
@@ -71,7 +69,7 @@ class GoogleWallet extends Model
     /**
      * Supported ticket types mapping
      */
-    private const array SUPPORTED_TICKET_TYPES = [
+    private const SUPPORTED_TICKET_TYPES = [
         Walletobjects\EventTicketClass::class => [EventTicketObject::class, 'eventticketobject'],
         Walletobjects\FlightClass::class => [Walletobjects\FlightObject::class, 'flightobject'],
         Walletobjects\GenericClass::class => [Walletobjects\GenericObject::class, 'genericobject'],
@@ -120,10 +118,9 @@ class GoogleWallet extends Model
         // Initialize Google Wallet API service
         $this->client = new GoogleClient();
 
-        $requestOptions = ArrayHelper::filter(Module::getInstance()->googleWalletConfig['requestOptions'] ?? [], ['timeout', 'proxy']);
-        if (!empty($requestOptions)) {
-            $options = ArrayHelper::merge(['verify' => false], $requestOptions);
-            $this->client->setHttpClient(new Client($options));
+        $clientOptions = ArrayHelper::filter(Module::getInstance()->googleWalletConfig['clientOptions'] ?? [], ['timeout', 'proxy', 'verify']);
+        if (!empty($clientOptions)) {
+            $this->client->setHttpClient(new Client($clientOptions));
         }
 
         $this->client->setApplicationName(Module::getInstance()->id);
@@ -230,11 +227,9 @@ class GoogleWallet extends Model
      * @param array|null $specifiedTicketFields
      *
      * @return string
-     * @throws DateInvalidTimeZoneException
      * @throws Exception
      * @throws GoogleServiceException
      * @throws InvalidConfigException
-     * @throws DateMalformedIntervalStringException
      */
     public function createTicket(
         string $classSuffix,
@@ -436,8 +431,7 @@ class GoogleWallet extends Model
      * @param string $inputTz
      * @param string $intervalDuration
      * @return string
-     * @throws DateInvalidTimeZoneException
-     * @throws DateMalformedIntervalStringException
+     * @throws \Exception
      */
     private function formatEndDate(string $dateEnd, string $inputFormat = 'd.m.Y', string $inputTz = 'UTC', string $intervalDuration = 'P0D'): string
     {
@@ -492,8 +486,8 @@ class GoogleWallet extends Model
     }
 
     /**
-     * @throws DateInvalidTimeZoneException
-     * @throws DateMalformedIntervalStringException
+     * Recursively replace datetime strings with DateTime objects
+     * @throws \Exception
      */
     private function replaceDatetimeStringsRecursive(array &$fields, array $keysToReplace = ['start', 'end'], string $parentKey = '', array $exceptions = []): void
     {
@@ -533,8 +527,6 @@ class GoogleWallet extends Model
     }
 
     /**
-     * @throws DateInvalidTimeZoneException
-     * @throws DateMalformedIntervalStringException
      * @throws InvalidConfigException
      */
     private function transformTicketFields(array $specifiedTicketFields): array
@@ -551,9 +543,8 @@ class GoogleWallet extends Model
     }
 
     /**
-     * @throws DateInvalidTimeZoneException
-     * @throws DateMalformedIntervalStringException
      * @throws InvalidConfigException
+     * @throws \Exception
      */
     private function transformValidTimeInterval(array &$specifiedTicketFields): void
     {

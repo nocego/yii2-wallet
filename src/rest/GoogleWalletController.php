@@ -2,8 +2,6 @@
 
 namespace nocego\yii2\wallet\rest;
 
-use DateInvalidTimeZoneException;
-use DateMalformedIntervalStringException;
 use Google\Service\Exception;
 use nocego\yii2\wallet\models\GoogleWallet;
 use nocego\yii2\wallet\Module;
@@ -123,9 +121,7 @@ class GoogleWalletController extends Controller
      * @throws BadRequestHttpException
      * @throws Exception
      * @throws InvalidConfigException
-     * @throws DateInvalidTimeZoneException
      * @throws \yii\base\Exception
-     * @throws DateMalformedIntervalStringException
      */
     public function actionCreateTicket(): array
     {

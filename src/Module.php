@@ -80,20 +80,6 @@ class Module extends \yii\base\Module implements BootstrapInterface
         parent::init();
     }
 
-//    /**
-//     * Init module translations
-//     *
-//     * @return void
-//     */
-//    public function registerTranslations(): void
-//    {
-//        Yii::$app->i18n->translations['nocego/wallet*'] = [
-//            'class' => 'yii\i18n\GettextMessageSource',
-//            'sourceLanguage' => 'en-US',
-//            'basePath' => $this->getBasePath() . '/messages'
-//        ];
-//    }
-
     /**
      * {@inheritDoc}
      */
