@@ -20,7 +20,7 @@
     },
     "minimum-stability": "beta",
     "require": {
-        "php": ">=8.3",
+        "php": ">=8.2",
         "yiisoft/yii2": "^2.0.20",
         "google/auth": "^1.18",
         "guzzlehttp/guzzle": "*",
