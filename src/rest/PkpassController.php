@@ -67,6 +67,11 @@ class PkpassController extends Controller
     public function actionGetTicket(): void
     {
         $pkPass = new PkpassModel();
-        $pkPass->getTicket(Yii::$app->request->getBodyParams());
+        $zip = $pkPass->getTicket(Yii::$app->request->getBodyParams());
+
+        $this->response->sendContentAsFile($zip, 'pass.pkpass', [
+            'mimeType' => 'application/vnd.apple.pkpass',
+            'inline' => false
+        ]);
     }
 }

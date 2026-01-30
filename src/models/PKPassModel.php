@@ -100,7 +100,7 @@ class PKPassModel extends Model
      * - labelColor: Optional label color
      *      e.g., ```'rgb(255,255,255)'```
      *
-     * @return void (outputs the pkpass file directly as response)
+     * @return string (returns the pkpass file)
      *
      * @throws InvalidConfigException
      * @throws PKPassException
@@ -108,7 +108,7 @@ class PKPassModel extends Model
      * @see https://hackage-content.haskell.org/package/hs-pkpass-0.6/docs/Passbook-Types.html
      *
      */
-    public function getTicket(array $fields): void
+    public function getTicket(array $fields): string
     {
         /** @var Module $moduleInstance */
         $moduleInstance = Module::getInstance();
@@ -118,7 +118,7 @@ class PKPassModel extends Model
         $this->validateRequiredParams($fields);
 
         $pass = $this->createPass($moduleInstance, $fields);
-        $pass->create(true);
+        return $pass->create();
     }
 
     /**
