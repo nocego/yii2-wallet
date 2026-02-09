@@ -31,11 +31,16 @@ class GoogleWalletController extends Controller
                         'actions' => [
                             'create-class',
                             'class-exists',
-                            'create-ticket',
-                            'get-ticket',
-                            'expire-ticket'
                         ],
                         'roles' => Module::getInstance()->canManageTickets,
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => [
+                            'create-ticket',
+                            'get-ticket',
+                            'expire-ticket',
+                        ]
                     ]
                 ]
             ],
