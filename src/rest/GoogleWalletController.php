@@ -40,7 +40,8 @@ class GoogleWalletController extends Controller
                             'create-ticket',
                             'get-ticket',
                             'expire-ticket',
-                        ]
+                        ],
+                        'roles' => ['@'],
                     ]
                 ]
             ],
