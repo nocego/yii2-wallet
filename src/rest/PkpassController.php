@@ -30,7 +30,7 @@ class PkpassController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['get-ticket'],
-                        'roles' => Module::getInstance()->canManageTickets,
+                        'roles' => ['@'],
                     ]
                 ]
             ],
