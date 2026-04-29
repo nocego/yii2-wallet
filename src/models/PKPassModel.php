@@ -2,11 +2,13 @@
 
 namespace nocego\yii2\wallet\models;
 
+use Exception;
 use nocego\yii2\wallet\Module;
 use PKPass\PKPass;
 use PKPass\PKPassException;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
+use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
 
 class PKPassModel extends Model
@@ -173,6 +175,7 @@ class PKPassModel extends Model
      *
      * @return PKPass
      * @throws PKPassException
+     * @throws Exception
      */
     private function createPass(Module $module, array $fields): PKPass
     {
@@ -191,6 +194,8 @@ class PKPassModel extends Model
             ],
             array_intersect_key($fields, array_flip(self::OPTIONAL_FIELDS))
         );
+
+        ArrayHelper::setValue($data, 'barcodes.0.messageEncoding', 'UTF-8');
 
         $pass->setData($data);
 
