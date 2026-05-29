@@ -5,6 +5,7 @@ namespace nocego\yii2\wallet\rest;
 use Google\Service\Exception;
 use nocego\yii2\wallet\models\GoogleWallet;
 use nocego\yii2\wallet\Module;
+use tonic\hq\accounting\jwt\JwtHttpBearerAuth;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\filters\AccessControl;
@@ -31,23 +32,21 @@ class GoogleWalletController extends Controller
                         'actions' => [
                             'create-class',
                             'class-exists',
+                            'create-ticket',
                             'get-ticket',
-                            'expire-ticket',
+                            'expire-ticket'
                         ],
                         'roles' => Module::getInstance()->canManageTickets,
-                    ],
-                    [
-                        'allow' => true,
-                        'actions' => [
-                            'create-ticket',
-                        ],
-                        'roles' => ['@'],
                     ]
                 ]
             ],
             'authenticator' => new ReplaceArrayValue([
                 'class' => CompositeAuth::class,
                 'authMethods' => [
+                    [
+                        'class' => JwtHttpBearerAuth::class,
+                        'realm' => 'rest',
+                    ],
                     [
                         'class' => HttpBearerAuth::class,
                         'realm' => 'rest'
