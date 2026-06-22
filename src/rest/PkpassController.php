@@ -3,8 +3,8 @@
 namespace nocego\yii2\wallet\rest;
 
 use nocego\yii2\wallet\models\PKPassModel;
-use nocego\yii2\wallet\Module;
 use PKPass\PKPassException;
+use tonic\hq\accounting\jwt\JwtHttpBearerAuth;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidConfigException;
@@ -37,6 +37,10 @@ class PkpassController extends Controller
             'authenticator' => new ReplaceArrayValue([
                 'class' => CompositeAuth::class,
                 'authMethods' => [
+                    [
+                        'class' => JwtHttpBearerAuth::class,
+                        'realm' => 'rest',
+                    ],
                     [
                         'class' => HttpBearerAuth::class,
                         'realm' => 'rest'
